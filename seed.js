@@ -71,7 +71,7 @@ db.get("SELECT name FROM sqlite_schema WHERE type='table' AND name='orders'", (e
           }
         });
   
-        db.run("INSERT INTO orders (user_id) VALUES (2)", function(error) {
+        db.run("INSERT INTO orders (user_id) VALUES (2)", function(err) {
           if (err) {
             throw new Error(err);
           }
