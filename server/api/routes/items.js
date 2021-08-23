@@ -1,11 +1,5 @@
 const router = require('express').Router()
-const sqlite3 = require('sqlite3')
-
-const db = new sqlite3.Database('./inhome.db', (err) => {
-    if (err) {
-      throw new Error(err)
-    }
-})
+const db = require('../../../seed')
 
 const sql = 'SELECT * FROM items'
 
@@ -19,3 +13,5 @@ router.get('/', (req, res, next) => {
         }
     })
 })
+
+module.exports = router
