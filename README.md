@@ -1,70 +1,99 @@
-# Getting Started with Create React App
+# Walmart Inhome
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# MVP
+* A web application that allows a user to view and update information pulled from a SQL database
+* A React UI allowing the user to view, create and update orders
+* A backend enabling communication between the front-end and the provided database
+* A clean usable interface that a first-time user should be able to use and find any required information
 
-## Available Scripts
+# Extra Features
+* 404 page component
 
-In the project directory, you can run:
 
-### `yarn start`
+# Getting Started
+1. To run seed file, run `npm run seed`
+2. To view your local version of this project, please **npm install**, then **npm run start**
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+Tools used
+* axios - promise based HTTP client for node.js and the browser (preferred over .fetch due to automatic JSON transformation)
+* cors - set of headers that allow the browser and server to communicate about which requests are (and are not) allowed
+* create-react-app - integrated toolchain for React (includes several packages under the hood including webpack and babel)
+* express - library for handling route requests and setting up node.js server
+* nodemon - monitors source code and automatically reflects changes in server
+* path - access and interact with file system
+* sqlite3 - SQL database engine
+* colorlib-404 - template for 404 page component
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
 
-### `yarn test`
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+# Database schema
+* **Users**
+CREATE TABLE users (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  name VARCHAR(255) NOT NULL
+);
+* **Items**
+CREATE TABLE items (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  name VARCHAR(255) NOT NULL
+)
+* **Orders**
+CREATE TABLE orders (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  user_id INTEGER NOT NULL,
+  FOREIGN KEY(user_id) REFERENCES users(id)
+)
+* **Order Items**
+CREATE TABLE order_items (
+  order_id INTEGER NOT NULL,
+  item_id INTEGER NOT NULL,
+  FOREIGN KEY (order_id) REFERENCES orders(id),
+  FOREIGN KEY (item_id) REFERENCES items(id),
+  PRIMARY KEY (order_id, item_id)
+)
 
-### `yarn build`
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## API routes used
+-GET
+  * *'/api/products'* : gets all items from the items table
+  * *'/api/customers/orders'* : gets all users and their associated orders
+  * *'/api/orders'* : gets itemized orders without user data
+  * *'/api/customers'* : gets all users info, id and name
+  * *'/api/orders/:orderID'* : gets single order and order details by order ID
+  * *Google geocode api route*
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+-POST
+* *'/api/orders'* : posts newly created order and adds to database
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+-PUT
+* *'/api/orders/:orderID'* : adds/removes items to existing orders on the order_items table
 
-### `yarn eject`
+-DELETE
+* *'/api/orders/:orderID'* : deletes entire order by order ID
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+## User flow
+- read, create, update, and delete orders
+- once customer rep is on the landing page, he/she will have access to the table of current orders
+- **UPDATE:** if he/she needs to update orders, the navigation bar hosts the link to update orders. Once on the update order page, he/she enters valid order ID to get the order in database. Single order is returned if the order ID exists. User can update order by removing something from the exisiting order or add an item that  is not currently in the order. Units are ignored for this exercise. Once updates are made, he/she can submit the changes to be made in the database.
+    * would be good to have a column for quantity in the order items table so multiple of the same items
+    * would be good to include error message stating invalid order ID in the future
+    * would be good to be able to enter multiple order IDs to return specific orders in one shot
+- **DELETE:** if he/she needs to delete an item from the database, he/she can navigate to the update orders page where they can enter the order ID and click  'delete entire  order' or remove a single item from the order.
+- **CREATE:** if he/she needs to create orders, the navigation bar hosts the link to create orders. Once on the create order page, he/she enters valid user ID to get the user in database. Once user ID is entered, a items are selected via the checkbox. When ready, he/she can submit the new order and the order table and the order items table will be updated.
+- **READ:** Product tables, Itemized order tables, Orders by Customer ID table, Users tables are available
+    * would be good to have filter abilities on the UI
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## File directories
+- Public folder: static files, images, and bundle.js
+- Server folder: API routes, index.js (backend setup)
+- src folder: index.js, root App component, all components
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+## Future features
+* Add/delete functionality for items and users
+* Analytics in some form (may need additional data points in tables like timestamp)
+* Add item quantities (# of items purchased, # of items in stock)
+* Unit tests
+* Generate more specific avator (https://www.npmjs.com/package/react-avatar) based on User info
+* CSS animations
 
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `yarn build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)

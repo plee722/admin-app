@@ -1,14 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
 import axios from "axios";
-import {
-  Card,
-  CardImg,
-  CardTitle,
-  CardBody,
-  CardSubtitle,
-  Button,
-} from "reactstrap";
+import { ImageContainer, UsersImage, Col, PageHeader, Box , Row} from "../componentStyles";
 
 const Users = (props) => {
   const [data, setData] = useState({ users: [] });
@@ -23,27 +15,27 @@ const Users = (props) => {
   } catch (err) {
     console.error("Unable to fetch all users", err);
   }
-
+  
   return (
-    <div id="container">
-      <h1>Customer Info</h1>
-      {data.users.map((user) => (
-        <Card>
-          <CardImg
+    <Box>
+      <PageHeader>User Info</PageHeader>
+      <Row>
+      {data.users.map((user, i) => (
+        <ImageContainer key={i}> 
+            <Col>
+            <UsersImage
             top
-            src="https://joeschmoe.io/api/v1/random"
+            src='https://joeschmoe.io/api/v1/random'
             alt="Random Avatar"
           />
-          <CardBody>
-            <CardTitle tag="h5">{user.name}</CardTitle>
-            <CardSubtitle tag="h6">ID #{user.id}</CardSubtitle>
-          </CardBody>
-        </Card>
+            </Col>
+          <Col>
+            {user.name} - ID #{user.id}
+          </Col>
+        </ImageContainer>
       ))}
-      <Link to="/">
-        <Button color="primary">Go to Homepage</Button>
-      </Link>
-    </div>
+      </Row>
+    </Box>
   );
 };
 

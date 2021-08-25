@@ -1,17 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
 import axios from "axios";
-import {
-    Card,
-    CardImg,
-    CardTitle,
-    CardBody,
-    CardSubtitle,
-    Button,
-  } from "reactstrap";
+import { ImageContainer, HomeImage, Col, PageHeader, Box , Row} from "../componentStyles";
 
 
-const Items = (props) => {
+const Items = () => {
   const [data, setData] = useState({ items: [] });
   try {
     useEffect(() => {
@@ -25,27 +17,26 @@ const Items = (props) => {
     console.error("Unable to fetch all users", err);
   }
 
-  // Need to update Card img source to food images or create table to store food images
   return (
-      <div id="container">
-          <h1>Item List</h1>
+    <Box>
+          <PageHeader>Item List</PageHeader>
+          <Row>
           {data.items.map((item) => (
-        <Card>
-          <CardImg
+        <ImageContainer>
+            <Col>
+          <HomeImage
             top
-            src="https://joeschmoe.io/api/v1/random"
+            src="/broccoli.png"
             alt="Random Avatar"
           />
-          <CardBody>
-            <CardTitle tag="h5">{item.name}</CardTitle>
-            <CardSubtitle tag="h6">ID #{item.id}</CardSubtitle>
-          </CardBody>
-        </Card>
+          </Col>
+          <Col>
+            {item.name} - ID #{item.id}
+          </Col>
+            </ImageContainer>
       ))}
-      <Link to="/">
-        <Button color="primary">Go to Homepage</Button>
-      </Link>
-      </div>
+      </Row>
+      </Box>
   )
 };
 
