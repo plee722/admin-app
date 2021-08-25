@@ -1,6 +1,6 @@
 # Walmart Inhome
 
-# MVP
+## MVP
 * A web application that allows a user to view and update information pulled from a SQL database
 * A React UI allowing the user to view, create and update orders
 * A backend enabling communication between the front-end and the provided database
@@ -18,7 +18,7 @@
 * Warning prompts for invalid submissions
 
 
-# Getting Started
+## Getting Started
 1. To run seed file, run `npm run seed`
 2. To app running locally, install dependencies with `npm install` and start app with `npm run start`
 
@@ -29,12 +29,14 @@ CREATE TABLE users (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
   name VARCHAR(255) NOT NULL
 );
+
 **Orders**
 CREATE TABLE orders (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
   user_id INTEGER NOT NULL,
   FOREIGN KEY(user_id) REFERENCES users(id)
-)
+);
+
 **Order Items**
 CREATE TABLE order_items (
   order_id INTEGER NOT NULL,
@@ -42,14 +44,15 @@ CREATE TABLE order_items (
   FOREIGN KEY (order_id) REFERENCES orders(id),
   FOREIGN KEY (item_id) REFERENCES items(id),
   PRIMARY KEY (order_id, item_id)
-)
+);
+
 **Items**
 CREATE TABLE items (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
   name VARCHAR(255) NOT NULL
-)
+);
 
-Tools used
+## Tools used
 * axios - promise based HTTP client for node.js and the browser (preferred over .fetch due to automatic JSON transformation)
 * colorlib-404 - template for 404 page component
 * cors - set of headers that allow the browser and server to communicate about which requests are (and are not) allowed
@@ -63,7 +66,7 @@ Tools used
 * sqlite3 - SQL database engine
 
 
-# App Organization
+## App Organization
 - Frontend
   - The src directory contains all of the React components, index.js where the virtual DOM is rendered, and the overall App component.
 - Backend
@@ -72,7 +75,7 @@ Tools used
   - The public directory contains static files like images along with bundled webpack file. This occurs under the hood due to Create React App.
 
 
-# User Walkthrough
+## User Walkthrough
 * A customer representative visits the website homepage and can navigate to several different pages:
   - Home
   - Users - view all users and ids
