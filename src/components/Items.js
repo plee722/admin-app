@@ -1,7 +1,13 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { ImageContainer, HomeImage, Col, PageHeader, Box , Row} from "../componentStyles";
-
+import {
+  ImageContainer,
+  HomeImage,
+  Col,
+  PageHeader,
+  Box,
+  Row,
+} from "../componentStyles";
 
 const Items = () => {
   const [data, setData] = useState({ items: [] });
@@ -19,25 +25,21 @@ const Items = () => {
 
   return (
     <Box>
-          <PageHeader>Item List</PageHeader>
-          <Row>
-          {data.items.map((item) => (
-        <ImageContainer>
+      <PageHeader>Item List</PageHeader>
+      <Row>
+        {data.items.map((item) => (
+          <ImageContainer>
             <Col>
-          <HomeImage
-            top
-            src="/broccoli.png"
-            alt="Random Avatar"
-          />
-          </Col>
-          <Col>
-            {item.name} - ID #{item.id}
-          </Col>
-            </ImageContainer>
-      ))}
+              <HomeImage top src="/broccoli.png" alt="Random Avatar" />
+            </Col>
+            <Col>
+              {item.name} - ID #{item.id}
+            </Col>
+          </ImageContainer>
+        ))}
       </Row>
-      </Box>
-  )
+    </Box>
+  );
 };
 
-export default Items
+export default Items;

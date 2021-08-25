@@ -1,8 +1,7 @@
 import React from "react";
 import Checkbox from "./Checkbox";
 
-const SingleOrderRow = ({ rows, deleteItem, handleChange})=> {
-
+const SingleOrderRow = ({ rows, deleteItem, handleChange }) => {
   return (
     <tr>
       <td>{rows.rowId}</td>
@@ -11,9 +10,7 @@ const SingleOrderRow = ({ rows, deleteItem, handleChange})=> {
       <td>{rows.item_name}</td>
       <td>
         {rows.order_id ? (
-          <button
-            onClick={() => deleteItem(rows.rowId, rows.item_id)}
-          >
+          <button onClick={() => deleteItem(rows.rowId, rows.item_id)}>
             X
           </button>
         ) : null}

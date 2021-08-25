@@ -41,7 +41,6 @@ router.post("/", async (req, res, next) => {
   const userID = req.body.userID;
   const items = req.body.items;
 
-  
   const userIdSql = `SELECT users.id FROM users WHERE users.id = ${userID}`;
   // This converts the sqlite3 function into a promise format
   db.get = util.promisify(db.get);
@@ -65,7 +64,8 @@ router.post("/", async (req, res, next) => {
       let orderItemIds = items
         .map((itemId) => `(${orderId},${itemId})`)
         .join(", ");
-      let orderItemSql = 'INSERT INTO order_items (order_id, item_id) VALUES ' + orderItemIds;
+      let orderItemSql =
+        "INSERT INTO order_items (order_id, item_id) VALUES " + orderItemIds;
 
       db.run(orderItemSql, function (err, result) {
         if (err) {
@@ -88,13 +88,13 @@ router.put("/:orderID", (req, res, next) => {
     const orderItemIds = addItems
       .map((itemId) => `(${orderID},${itemId})`)
       .join(", ");
-      let addSql =
-        "INSERT INTO order_items (order_id, item_id) VALUES " + orderItemIds;
-      db.run(addSql, (err) => {
-        if (err) {
-          return console.error(err.message);
-        } 
-      });
+    let addSql =
+      "INSERT INTO order_items (order_id, item_id) VALUES " + orderItemIds;
+    db.run(addSql, (err) => {
+      if (err) {
+        return console.error(err.message);
+      }
+    });
   }
 
   if (Array.isArray(removeItems) && removeItems.length > 0) {

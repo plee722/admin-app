@@ -1,8 +1,7 @@
 import React from "react";
-import { Input } from '../componentStyles'
+import { Input } from "../componentStyles";
 
-const Form = ({ id, type, handleFormChange })=> {
-
+const Form = ({ id, type, handleFormChange }) => {
   return (
     <form>
       <label htmlFor="id">Enter {type} ID</label>

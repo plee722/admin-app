@@ -1,9 +1,14 @@
 import React from "react";
 import SingleOrderRow from "./SingleOrderRow";
 
-const SingleOrderTable = ({ orders, deleteItem, itemsNotInOrder, handleChange})=> {
+const SingleOrderTable = ({
+  orders,
+  deleteItem,
+  itemsNotInOrder,
+  handleChange,
+}) => {
   let combined = orders.concat(itemsNotInOrder);
-  
+
   return (
     <div>
       <div>

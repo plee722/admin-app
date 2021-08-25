@@ -1,8 +1,7 @@
 import React from "react";
-import { Td } from '../componentStyles';
+import { Td } from "../componentStyles";
 
-const OrderRow = ({order}) => {
-
+const OrderRow = ({ order }) => {
   return (
     <tr>
       <Td>{order.user_name}</Td>
