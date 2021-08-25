@@ -19,8 +19,8 @@
 
 
 ## Getting Started
-1. To run seed file, run `npm run seed`
-2. To app running locally, install dependencies with `npm install` and start app with `npm run start`
+1. To app running locally, install dependencies with `npm install` and start app with `npm run start`
+2. To run seed file, run `npm run seed`
 
 * If you are creating the database manually, use the schema below:
 
