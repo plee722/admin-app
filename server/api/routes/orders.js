@@ -83,14 +83,11 @@ router.put("/:orderID", (req, res, next) => {
   const addItems = req.body.addItems;
   const removeItems = req.body.removeItems;
   const orderID = req.params.orderID;
-  console.log('here is order ID', req.params)
-  console.log('hitting route', req.body)
 
   if (Array.isArray(addItems) && addItems.length > 0) {
     const orderItemIds = addItems
       .map((itemId) => `(${orderID},${itemId})`)
       .join(", ");
-      console.log('here is orderItemIds', orderItemIds)
       let addSql =
         "INSERT INTO order_items (order_id, item_id) VALUES " + orderItemIds;
       db.run(addSql, (err) => {
@@ -115,7 +112,6 @@ router.put("/:orderID", (req, res, next) => {
 
 // delete an order by ID
 router.delete("/:orderID", (req, res, next) => {
-  console.log('hitting delete request')
   const orderID = req.params.orderID;
   db.run(sqlMap.deleteOrder, { $orderID: orderID }, (err) => {
     if (err) {
