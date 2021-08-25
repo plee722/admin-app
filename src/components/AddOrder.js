@@ -57,7 +57,6 @@ class AddOrder extends Component {
         orderItems.push(itemIds[checkbox]);
       });
     const info = { items: orderItems, userID: this.state.id };
-    console.log('right before axios request', info)
     let res = await axios.post("/api/orders", info);
     this.setState({
       id: "",

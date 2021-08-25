@@ -6,44 +6,36 @@
 * A backend enabling communication between the front-end and the provided database
 * A clean usable interface that a first-time user should be able to use and find any required information
 
-# Extra Features
-* 404 page component
+
+## Future features to add
+* Add/delete functionality for items and users
+* Analytics in some form (may need additional data points in tables like timestamp)
+* Add item quantities (# of items purchased, # of items in stock)
+* Unit tests - WIP
+* Implement and store random avatar for each user
+* CSS animations
+* Search functionality (would be useful with higher volumes of data)
+* Warning prompts for invalid submissions
 
 
 # Getting Started
 1. To run seed file, run `npm run seed`
-2. To view your local version of this project, please **npm install**, then **npm run start**
+2. To app running locally, install dependencies with `npm install` and start app with `npm run start`
 
-Tools used
-* axios - promise based HTTP client for node.js and the browser (preferred over .fetch due to automatic JSON transformation)
-* cors - set of headers that allow the browser and server to communicate about which requests are (and are not) allowed
-* create-react-app - integrated toolchain for React (includes several packages under the hood including webpack and babel)
-* express - library for handling route requests and setting up node.js server
-* nodemon - monitors source code and automatically reflects changes in server
-* path - access and interact with file system
-* sqlite3 - SQL database engine
-* colorlib-404 - template for 404 page component
+* If you are creating the database manually, use the schema below:
 
-
-
-# Database schema
-* **Users**
+**Users**
 CREATE TABLE users (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
   name VARCHAR(255) NOT NULL
 );
-* **Items**
-CREATE TABLE items (
-  id INTEGER PRIMARY KEY AUTOINCREMENT,
-  name VARCHAR(255) NOT NULL
-)
-* **Orders**
+**Orders**
 CREATE TABLE orders (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
   user_id INTEGER NOT NULL,
   FOREIGN KEY(user_id) REFERENCES users(id)
 )
-* **Order Items**
+**Order Items**
 CREATE TABLE order_items (
   order_id INTEGER NOT NULL,
   item_id INTEGER NOT NULL,
@@ -51,49 +43,45 @@ CREATE TABLE order_items (
   FOREIGN KEY (item_id) REFERENCES items(id),
   PRIMARY KEY (order_id, item_id)
 )
+**Items**
+CREATE TABLE items (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  name VARCHAR(255) NOT NULL
+)
+
+Tools used
+* axios - promise based HTTP client for node.js and the browser (preferred over .fetch due to automatic JSON transformation)
+* colorlib-404 - template for 404 page component
+* cors - set of headers that allow the browser and server to communicate about which requests are (and are not) allowed
+* create-react-app - integrated toolchain for React (includes several packages under the hood including webpack and babel)
+* express - library for handling route requests and setting up node.js server
+* @emotion/styled - library to create styled React components
+* nodemon - monitors source code and automatically reflects changes in server
+* path - access and interact with file system
+* prettier - code formatter
+* react-router-dom - library for routing in React
+* sqlite3 - SQL database engine
 
 
-## API routes used
--GET
-  * *'/api/products'* : gets all items from the items table
-  * *'/api/customers/orders'* : gets all users and their associated orders
-  * *'/api/orders'* : gets itemized orders without user data
-  * *'/api/customers'* : gets all users info, id and name
-  * *'/api/orders/:orderID'* : gets single order and order details by order ID
-  * *Google geocode api route*
-
--POST
-* *'/api/orders'* : posts newly created order and adds to database
-
--PUT
-* *'/api/orders/:orderID'* : adds/removes items to existing orders on the order_items table
-
--DELETE
-* *'/api/orders/:orderID'* : deletes entire order by order ID
-
-## User flow
-- read, create, update, and delete orders
-- once customer rep is on the landing page, he/she will have access to the table of current orders
-- **UPDATE:** if he/she needs to update orders, the navigation bar hosts the link to update orders. Once on the update order page, he/she enters valid order ID to get the order in database. Single order is returned if the order ID exists. User can update order by removing something from the exisiting order or add an item that  is not currently in the order. Units are ignored for this exercise. Once updates are made, he/she can submit the changes to be made in the database.
-    * would be good to have a column for quantity in the order items table so multiple of the same items
-    * would be good to include error message stating invalid order ID in the future
-    * would be good to be able to enter multiple order IDs to return specific orders in one shot
-- **DELETE:** if he/she needs to delete an item from the database, he/she can navigate to the update orders page where they can enter the order ID and click  'delete entire  order' or remove a single item from the order.
-- **CREATE:** if he/she needs to create orders, the navigation bar hosts the link to create orders. Once on the create order page, he/she enters valid user ID to get the user in database. Once user ID is entered, a items are selected via the checkbox. When ready, he/she can submit the new order and the order table and the order items table will be updated.
-- **READ:** Product tables, Itemized order tables, Orders by Customer ID table, Users tables are available
-    * would be good to have filter abilities on the UI
-
-## File directories
-- Public folder: static files, images, and bundle.js
-- Server folder: API routes, index.js (backend setup)
-- src folder: index.js, root App component, all components
+# App Organization
+- Frontend
+  - The src directory contains all of the React components, index.js where the virtual DOM is rendered, and the overall App component.
+- Backend
+  - The server directory contains all of the API routes for users, orders, and items in addition to index.js where the express server is initialized. 
+- Assets
+  - The public directory contains static files like images along with bundled webpack file. This occurs under the hood due to Create React App.
 
 
-## Future features
-* Add/delete functionality for items and users
-* Analytics in some form (may need additional data points in tables like timestamp)
-* Add item quantities (# of items purchased, # of items in stock)
-* Unit tests
-* Generate more specific avator (https://www.npmjs.com/package/react-avatar) based on User info
-* CSS animations
-
+# User Walkthrough
+* A customer representative visits the website homepage and can navigate to several different pages:
+  - Home
+  - Users - view all users and ids
+  - Items - view all items and ids
+  - Orders - view all orders by user with items purchased 
+  - Analytics - leads to 404 page
+  - Add Order - add new order
+  - Edit Order - modify or delete existing order
+* To view data, they can click the icons on the dashboard or the links in the navigation bar to the Users, Items, and Orders pages. 
+* To add a new order, they can navigate to the "Add Order" page via the navigation bar. Once on the page, they should enter a valid user ID, which can be verified on the Users page. They can then select all desired items for the order. Lastly, they can submit the order. A message confirming the order submission will appear. This message links back to the Orders page to verify the new order.
+* To update a new order, they can navigate to the "Edit Order" page via the navigation bar. Once on the page, they should enter a valid order ID, which can be verified on the Orders page. They can then remove and/or select all desired items for the existing order. After making the updates, they can submit the update. A message confirming the order change will appear. This message links back to the Orders page to verify the changes.
+* If they try to navigate to a page that doesn't exist (like the Analytics page or http://localhost:3000/random), they will be directed to the 404 not found page.
