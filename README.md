@@ -16,6 +16,7 @@
 * CSS animations
 * Search functionality (would be useful with higher volumes of data)
 * Warning prompts for invalid submissions
+* Additional styling
 
 
 ## Getting Started
