@@ -1,4 +1,4 @@
-# Walmart Inhome
+# Admin App
 
 ## MVP
 * A web application that allows a user to view and update information pulled from a SQL database
