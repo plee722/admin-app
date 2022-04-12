@@ -3,7 +3,7 @@
 // const sqlite3 = require('sqlite3')
 // const app = require('../server/index')
 
-// const db = new sqlite3.Database('./inhome.db', (err) => {
+// const db = new sqlite3.Database('./data.db', (err) => {
 //     if (err) {
 //       throw new Error(err)
 //     }

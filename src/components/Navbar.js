@@ -6,8 +6,8 @@ const NavigationBar = () => {
   return (
     <Container>
       <Row>
-        <img src="/logo.png" width="75" height="75" alt="Walmart logo" />
-        <HomeHeader>Walmart inHome</HomeHeader>
+        <img src="/hydro-power.png" width="75" height="75" alt="Homepage logo" />
+        <HomeHeader>Admin App</HomeHeader>
       </Row>
 
       <List>
